@@ -146,8 +146,6 @@ def post():
         file_path = request.form['file_path']
         item_name = request.form['item_name']
         fg_name = request.form.getlist('fg_name')
-        # fg_name = [i[0:-1] for i in fg_name]
-        print(fg_name, file=sys.stdout)
         is_pub = 0
         if (request.form.get('is_pub')):
             is_pub = 1
@@ -157,7 +155,6 @@ def post():
         item_id = cursor.lastrowid
         query = 'INSERT INTO Share Values (%s, %s, %s)'
         for name in fg_name:
-
             cursor.execute(query, (username, name, item_id))
             conn.commit()
         cursor.close()
@@ -307,9 +304,18 @@ def tagFriend(id_num):
         query = 'SELECT * FROM Tag WHERE email_tagged = %s AND email_tagger = %s AND item_id = %s'
         cursor.execute(query, (tag_email, username, id_num))
         duplicate = cursor.fetchall()
+        print(tag_email, file=sys.stdout)
+        print(username, file=sys.stdout)
         if (duplicate):
             error = "You already tagged this person in this post"
             return redirect(url_for('tagFriendError', error = error, id_num = content_num))
+        elif (tag_email == username):
+            status = True
+            query = 'INSERT INTO Tag(email_tagged, email_tagger, item_id, status) VALUES(%s, %s, %s, %s)'
+            cursor.execute(query, (tag_email, username, id_num, status))
+            conn.commit()
+            cursor.close()
+            return redirect(url_for('viewContentItem', id_num = content_num))
         elif (can_view):
             query = 'INSERT INTO Tag(email_tagged, email_tagger, item_id, status) VALUES(%s, %s, %s, %s)'
             cursor.execute(query, (tag_email, username, id_num, status))
@@ -334,7 +340,7 @@ def tagFriendError(id_num):
         query = 'SELECT * FROM Rate WHERE item_id = %s'
         cursor.execute(query, (id_num))
         ratings = cursor.fetchall()
-        query = 'SELECT * FROM Tag WHERE item_id = %s'
+        query = 'SELECT * FROM Tag WHERE item_id = %s and status = 1'
         cursor.execute(query, (id_num))
         tags = cursor.fetchall()
         cursor.close()

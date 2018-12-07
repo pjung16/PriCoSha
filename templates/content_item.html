@@ -51,7 +51,10 @@
 			<p class="error"><strong>Error:</strong> {{error}}</p>
 		{% endif %}
 		<div>
-			Ratings
+			<div>Ratings: </div>
+			{% for r in ratings %}
+				<span class="badge badge-info">{{r.email}}: {{r.emoji}}</span>
+			{% endfor %}
 		</div>
 	</div>
 
