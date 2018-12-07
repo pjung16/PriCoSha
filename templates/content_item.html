@@ -1,0 +1,61 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/minty/bootstrap.css">
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+	  <a class="navbar-brand" href="/home">PriCoSha</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+
+	  <div class="collapse navbar-collapse" id="navbarColor01">
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item">
+	        <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="/create_group">Create a Friend Group</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="/add_friend">Add Friend</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="/manage_tags">Manage Tags</a>
+	      </li>
+	    </ul>
+	    <div class="nav-item my-2 my-lg-0">
+	      <a href="/logout" class="btn btn-secondary">Logout</a>
+	  	</div>
+	  </div>
+	</nav>
+	<div class="jumbotron">
+		<h1 class="display-4">{{item.item_name}}</h1>
+		<h5 class="display-5">Posted on {{item.post_time}}</h5>
+		</br>
+		<h4 class="display-5">Link to item: <a href="{{item.file_path}}">{{item.file_path}}</a></h4>
+		</br>
+		<div>
+			<div>People Tagged: </div>
+			{% for t in tags %}
+				<span class="badge badge-info">{{t.email_tagged}}</span>
+			{% endfor %}
+		</div>
+		</br>
+		<form action="/content_item/{{item.item_id}}/tagFriend" method="POST">
+			<div>Tag your friend:</div>
+				<input style="max-width: 30%;" type="text" class="form-control" id="inputDefault" name="email" placeholder="Email" required></br>
+			<input class="btn btn-primary" type="submit" value = "Tag Friend" />
+		</form>
+		{% if error %}
+			<p class="error"><strong>Error:</strong> {{error}}</p>
+		{% endif %}
+		<div>
+			Ratings
+		</div>
+	</div>
+
+</body>
+
+
+</html>

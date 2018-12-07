@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/minty/bootstrap.css">
+</head>
+
+<body>
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+	  <a class="navbar-brand" href="/home">PriCoSha</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+
+	  <div class="collapse navbar-collapse" id="navbarColor01">
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item">
+	        <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="/create_group">Create a Friend Group</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="/add_friend">Add Friend</a>
+	      </li>
+	      <li class="nav-item active">
+	        <a class="nav-link" href="/manage_tags">Manage Tags</a>
+	      </li>
+	    </ul>
+	    <div class="nav-item my-2 my-lg-0">
+	      <a href="/logout" class="btn btn-secondary">Logout</a>
+	  	</div>
+	  </div>
+	</nav>
+
+	<div class="jumbotron">
+		<p><h1 class="display-5">Tags</h1></p>
+
+		<div style="text-align: center">
+		{% for t in tags %}
+		<div style="display: inline-block; margin: 5px;">
+			<div>Tagged by: {{t.email_tagger}}</div>
+			</br>
+			<div class="card border-secondary mb-3" style="width: 28vw;">
+			 	<div class="card-header">
+			 		{{t.item_id}}. {{t.email_post}}
+			 		</br>
+			 		{{t.post_time}}
+			 	</div>
+			  	<div class="card-body">
+			    	<h4 class="card-title">{{t.item_name}}</h4>
+			    	<p class="card-text"><a href={{t.file_path}}>{{t.file_path}}</a></p>
+			  	</div>
+			  	<div>
+				  	<a href="/acceptTag/{{t.item_id}}+{{t.email_tagger}}"><button type="button" class="btn btn-success" style="max-width: 50%; display: inline-block; margin: 0 5px 15px 5px;">Accept Tag</button></a>
+				  	<a href="/declineTag/{{t.item_id}}+{{t.email_tagger}}"><button type="button" a="/" class="btn btn-danger" style="max-width: 50%; display: inline-block; margin: 0 5px 15px 5px;">Decline Tag</button></a>
+			  </div>
+			</div>
+		</div>
+		{% endfor %}
+		</div>
+	</div>
+</body>
+
+</html>

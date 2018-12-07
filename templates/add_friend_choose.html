@@ -1,0 +1,53 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/minty/bootstrap.css">
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+	  <a class="navbar-brand" href="/home">PriCoSha</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+
+	  <div class="collapse navbar-collapse" id="navbarColor01">
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item">
+	        <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="/create_group">Create a Friend Group</a>
+	      </li>
+	      <li class="nav-item active">
+	        <a class="nav-link" href="/add_friend">Add Friend</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="/manage_tags">Manage Tags</a>
+	      </li>
+	    </ul>
+	    <div class="nav-item my-2 my-lg-0">
+	      <a href="/logout" class="btn btn-secondary">Logout</a>
+	  	</div>
+	  </div>
+	</nav>
+	<div class='jumbotron'>
+		<p><a href="/add_friend" class="btn btn-info">Go back</a></p>
+		<form class="form-group" action="/addToGroupChoose" method="POST">
+			<div>Here are the emails that correspond to the name. Which one would you like to add?</div>
+			<input type="hidden" name="fg_name" value="{{fg_name}}">
+			{% for p in people %}
+			<div class="form-check" style="padding-left: 0;">
+		        <label class="form-check-label">
+		          	<input id="optionsRadios1" type="radio" name="email" value="{{p.username}}">
+		          	{{p.username}}
+		        </label>
+		    </div>
+			{% endfor %}
+			</br>
+			<input type="submit" value = "Add Friend" class="btn btn-primary" />
+		</form>
+	</div>
+
+</body>
+
+
+</html>

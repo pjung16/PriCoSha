@@ -1,0 +1,84 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/minty/bootstrap.css">
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+	  <a class="navbar-brand" href="/home">PriCoSha</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+
+	  <div class="collapse navbar-collapse" id="navbarColor01">
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item active">
+	        <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="/create_group">Create a Friend Group</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="/add_friend">Add Friend</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="/manage_tags">Manage Tags</a>
+	      </li>
+	    </ul>
+	    <div class="nav-item my-2 my-lg-0">
+	      <a href="/logout" class="btn btn-secondary">Logout</a>
+	  	</div>
+	  </div>
+	</nav>
+	<div class='jumbotron'>
+		<h1 class="display-4">Welcome {{ username.fname }}</h1> 
+		<form class="form-group" action="/post" method="POST">
+			<label class="col-form-label" for="inputDefault">Item Name</label>
+				<input type="text" class="form-control" id="inputDefault" name = "item_name" placeholder="Item Name" required/>
+			<label class="col-form-label" for="inputDefault">File Path</label>
+				<input type="text" class="form-control" id="inputDefault" name = "file_path" placeholder="File Path" required/> </br>
+			Public: <input type="checkbox" name = "is_pub" checked/> </br> </br>
+			<div>Groups to share to:</div>
+			{% for g in groups %}
+				<div class="form-check">
+			        <label class="form-check-label">
+			          	<input class="form-check-input" type="checkbox" name="fg_name" value="{{g.fg_name}}"/>
+			          	{{g.fg_name}}
+			        </label>
+			     </div>
+				<!-- <input type="checkbox" name="fg_name" value={{g.fg_name}}/> {{g.fg_name}} -->
+			{% endfor %}
+			</br>
+			<input type="submit" value = Post class="btn btn-primary" />
+		</form>
+
+		<style type="text/css">
+			table, th, td{
+				border: 1px solid black;
+			}
+		</style>
+
+		<p><h3 class="display-5">Posts</h3></p>
+
+		<div style="text-align: center">
+		{% for p in posts %}
+			<div style="display: inline-block; margin: 5px;">
+				<div class="card border-secondary mb-3" style="width: 28vw;">
+				 	<div class="card-header">
+				 		<a href="/content_item/{{p.item_id}}">{{p.item_id}}. {{p.email_post}}</a>
+				 		</br>
+				 		{{p.post_time}}
+				 	</div>
+				  	<div class="card-body">
+				    	<h4 class="card-title">{{p.item_name}}</h4>
+				    	<p class="card-text"><a href={{p.file_path}}>{{p.file_path}}</a></p>
+				  	</div>
+				</div>
+			</div>
+		{% endfor %}
+		</div>
+	</div>
+
+</body>
+
+
+</html>
